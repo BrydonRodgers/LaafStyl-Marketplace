@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 
+interface CartItem {
+  product_id: string;
+  quantity: number;
+  price: number;
+  name: string;
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const { items, orderId, email } = await req.json()
+    const { items, orderId, email } = await req.json() as { items: CartItem[]; orderId: number; email: string }
 
-    const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    const total = items.reduce((sum: number, item: CartItem) => sum + item.price * item.quantity, 0)
 
     const params = {
       merchant_id: process.env.PAYFAST_MERCHANT_ID,

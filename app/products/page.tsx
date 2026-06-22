@@ -30,7 +30,7 @@ export default function ProductsPage() {
     ? products
     : products.filter(p => p.category === category);
 
-  const categories = ['all', ...new Set(products.map(p => p.category).filter(Boolean))];
+  const categories = ['all', ...new Set(products.map(p => p.category).filter(Boolean))] as string[];
 
   return (
     <div className="min-h-screen bg-white">

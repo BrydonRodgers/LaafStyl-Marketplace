@@ -1,15 +1,15 @@
 'use client'
-import { useCart } from '@/lib/store'
+import { useCartStore } from '@/lib/store'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function CheckoutPage() {
-  const { cart } = useCart()
+  const items = useCartStore((state) => state.items)
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
   const handleStripe = async () => {
     setLoading(true)
@@ -17,7 +17,7 @@ export default function CheckoutPage() {
     const res = await fetch(`${apiUrl}/api/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: cart, email }),
+      body: JSON.stringify({ items: items, email }),
     })
     const { sessionId } = await res.json()
     // Redirect to Stripe checkout (needs stripe.js setup)
@@ -31,7 +31,7 @@ export default function CheckoutPage() {
     const res = await fetch(`${apiUrl}/api/payfast/redirect`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ items: cart, orderId: Date.now(), email }),
+      body: JSON.stringify({ items: items, orderId: Date.now(), email }),
     })
     const { redirectUrl } = await res.json()
     window.location.href = redirectUrl
@@ -44,8 +44,8 @@ export default function CheckoutPage() {
 
       <div className="bg-gray-50 p-6 rounded mb-8">
         <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
-        {cart.map(item => (
-          <div key={item.id} className="flex justify-between py-2 border-b">
+        {items.map(item => (
+          <div key={item.product_id} className="flex justify-between py-2 border-b">
             <span>{item.name} x{item.quantity}</span>
             <span>${(item.price * item.quantity).toFixed(2)}</span>
           </div>
