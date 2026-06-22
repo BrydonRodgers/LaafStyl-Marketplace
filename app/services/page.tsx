@@ -11,7 +11,8 @@ export default function ServicesPage() {
   useEffect(() => {
     async function fetchServices() {
       try {
-        const res = await fetch('/api/services');
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+        const res = await fetch(`${apiUrl}/api/services`);
         const { data } = await res.json();
         setServices(data || []);
       } catch (error) {

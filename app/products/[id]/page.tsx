@@ -16,7 +16,8 @@ export default function ProductDetail({ params }: { params: { id: string } }) {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const res = await fetch(`/api/products/${params.id}`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+        const res = await fetch(`${apiUrl}/api/products/${params.id}`);
         const { data } = await res.json();
         setProduct(data);
       } catch (error) {

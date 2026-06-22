@@ -13,7 +13,8 @@ export default function CheckoutPage() {
 
   const handleStripe = async () => {
     setLoading(true)
-    const res = await fetch('/api/checkout', {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const res = await fetch(`${apiUrl}/api/checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ items: cart, email }),
@@ -26,7 +27,8 @@ export default function CheckoutPage() {
 
   const handlePayfast = async () => {
     setLoading(true)
-    const res = await fetch('/api/payfast/redirect', {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
+    const res = await fetch(`${apiUrl}/api/payfast/redirect`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ items: cart, orderId: Date.now(), email }),

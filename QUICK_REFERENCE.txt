@@ -1,0 +1,140 @@
+================================================================================
+NGROK TUNNEL DEPLOYMENT - QUICK REFERENCE
+================================================================================
+
+STATUS: All files prepped and ready. Waiting for ngrok URL from Brydon.
+
+================================================================================
+FILES CREATED
+================================================================================
+
+1. .env.local
+   - Environment variables with placeholder ngrok URL
+   - Contains: Stripe keys, PayFast credentials, database URL
+   - NEXT_PUBLIC_API_URL=https://placeholder.ngrok.io
+
+2. DEPLOY.sh (executable)
+   - Automated deployment script
+   - Usage: ./DEPLOY.sh https://your-ngrok-url
+
+3. LOCAL_QUICK_TEST.md
+   - Complete testing & deployment instructions
+   - Step-by-step guide for local development
+
+4. NGROK_PREP_SUMMARY.md
+   - Overview of all prep work completed
+   - Lists all files created/modified
+
+5. DEPLOYMENT_READY_CHECKLIST.md
+   - Detailed checklist of deployment phases
+   - API endpoints table & verification steps
+
+6. QUICK_REFERENCE.txt
+   - This file (you are here)
+
+================================================================================
+WHEN BRYDON SENDS NGROK URL
+================================================================================
+
+Run this command:
+
+    ./DEPLOY.sh https://[ngrok-url-here]
+
+Example:
+    ./DEPLOY.sh https://abc123-def456-ghi789.ngrok.io
+
+This will:
+  1. Update .env.local with ngrok URL
+  2. Run npm run build
+  3. Commit changes to git
+  4. Push to main branch
+
+That's it! Deployment is automatic.
+
+================================================================================
+WHAT WAS CHANGED
+================================================================================
+
+8 files updated with NEXT_PUBLIC_API_URL pattern:
+  - app/page.tsx
+  - app/products/page.tsx
+  - app/products/[id]/page.tsx
+  - app/services/page.tsx
+  - app/services/[id]/book/page.tsx
+  - app/checkout/page.tsx
+  - app/admin/page.tsx
+  - app/cart/page.tsx
+
+All fetch() calls now use:
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+  const res = await fetch(`${apiUrl}/api/endpoint`, {...});
+
+================================================================================
+API ENDPOINTS COVERED
+================================================================================
+
+GET  /api/products           - Product listing
+GET  /api/products/:id       - Product detail
+POST /api/products           - Create product (admin)
+PUT  /api/products/:id       - Update product (admin)
+
+GET  /api/services           - Services listing
+GET  /api/services/:id       - Service detail
+POST /api/bookings           - Create booking
+
+POST /api/checkout           - Stripe checkout
+POST /api/payfast/redirect   - PayFast checkout
+POST /api/orders             - Create order
+
+All now point to: ${NEXT_PUBLIC_API_URL}/api/endpoint
+
+================================================================================
+LOCAL DEVELOPMENT (NO NGROK)
+================================================================================
+
+NEXT_PUBLIC_API_URL is optional. If not set:
+  → Falls back to http://localhost:3000
+  → Perfect for local development
+
+Set it when deploying with ngrok tunnel.
+
+================================================================================
+DOCKER SETUP (when needed)
+================================================================================
+
+Start backend:
+  docker-compose up --build
+
+Start ngrok tunnel (separate terminal):
+  ngrok http 3000
+
+Then deploy:
+  ./DEPLOY.sh https://[ngrok-url]
+
+================================================================================
+KEY FILES TO READ
+================================================================================
+
+For detailed instructions:
+  - LOCAL_QUICK_TEST.md          (step-by-step testing)
+  - DEPLOYMENT_READY_CHECKLIST.md (complete deployment guide)
+  - NGROK_PREP_SUMMARY.md         (overview of changes)
+
+For quick reference:
+  - This file (QUICK_REFERENCE.txt)
+
+================================================================================
+READY TO DEPLOY?
+================================================================================
+
+Prerequisites from Brydon:
+  ✓ Docker running with docker-compose up --build
+  ✓ ngrok running with ngrok http 3000
+  ✓ ngrok URL copied (e.g., https://abc123.ngrok.io)
+
+Then execute:
+  ./DEPLOY.sh https://[ngrok-url-here]
+
+Everything else is pre-configured and ready.
+
+================================================================================

@@ -32,7 +32,8 @@ export default function CartPage() {
     setLoading(true);
     try {
       // Create order
-      const res = await fetch('/api/orders', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+      const res = await fetch(`${apiUrl}/api/orders`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

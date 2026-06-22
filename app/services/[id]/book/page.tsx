@@ -30,7 +30,8 @@ export default function BookServicePage({ params }: { params: { id: string } }) 
 
       // Fetch service
       try {
-        const res = await fetch(`/api/services/${params.id}`);
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+        const res = await fetch(`${apiUrl}/api/services/${params.id}`);
         const { data } = await res.json();
         setService(data);
 
@@ -54,7 +55,8 @@ export default function BookServicePage({ params }: { params: { id: string } }) 
 
     setSubmitting(true);
     try {
-      const res = await fetch('/api/bookings', {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+      const res = await fetch(`${apiUrl}/api/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

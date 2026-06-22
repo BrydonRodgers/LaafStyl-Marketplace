@@ -40,7 +40,8 @@ export default function AdminDashboard() {
 
   async function fetchProducts() {
     try {
-      const res = await fetch('/api/products');
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+      const res = await fetch(`${apiUrl}/api/products`);
       const { data } = await res.json();
       setProducts(data || []);
     } catch (error) {
@@ -52,10 +53,11 @@ export default function AdminDashboard() {
     e.preventDefault();
 
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
       const method = editingProduct ? 'PUT' : 'POST';
       const url = editingProduct
-        ? `/api/products/${editingProduct.id}`
-        : '/api/products';
+        ? `${apiUrl}/api/products/${editingProduct.id}`
+        : `${apiUrl}/api/products`;
 
       const res = await fetch(url, {
         method,
