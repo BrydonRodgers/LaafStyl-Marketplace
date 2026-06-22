@@ -1,0 +1,17 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "outputDirectory": ".next",
+  "public": false,
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key",
+    "STRIPE_SECRET_KEY": "@stripe_secret_key",
+    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
+    "PAYFAST_MERCHANT_ID": "@payfast_merchant_id",
+    "PAYFAST_MERCHANT_KEY": "@payfast_merchant_key"
+  }
+}
