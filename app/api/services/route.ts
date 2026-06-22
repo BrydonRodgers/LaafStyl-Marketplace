@@ -69,23 +69,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { data, error } = await supabase
-      .from('services')
-      .insert([
-        {
-          name,
-          description,
-          price: parseFloat(price),
-          duration_minutes: parseInt(duration_minutes),
-          image_url,
-          active: true,
-        },
-      ])
-      .select();
+    // For now, return mock response (to be connected to Supabase later)
+    const newService = {
+      id: MOCK_SERVICES.length + 1,
+      name,
+      description,
+      price: parseFloat(price),
+      duration_minutes: parseInt(duration_minutes),
+      image_url,
+      active: true,
+    };
 
-    if (error) throw error;
-
-    return NextResponse.json({ data: data[0] }, { status: 201 });
+    return NextResponse.json({ data: newService }, { status: 201 });
   } catch (error) {
     console.error('POST /api/services error:', error);
     return NextResponse.json(
