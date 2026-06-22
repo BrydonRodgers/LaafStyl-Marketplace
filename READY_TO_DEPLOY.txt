@@ -1,0 +1,246 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                  DAY 5: DEPLOYMENT INFRASTRUCTURE READY                     ║
+║                                                                             ║
+║  LaafStyl Marketplace - GitHub + Railway Deployment Configuration         ║
+║  Status: ✓ COMPLETE - All files committed to main branch                  ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+DEPLOYMENT FILES CREATED:
+─────────────────────────────────────────────────────────────────────────────
+
+GitHub Actions CI/CD:
+  ✓ .github/workflows/deploy.yml          (2.2 KB) - Auto-build & deploy
+  ✓ Triggers on: push to main branch
+  ✓ Includes: npm install, lint, build, artifact upload, Railway trigger
+
+Railway Deployment:
+  ✓ railway.json                          (280 B) - Railway config
+  ✓ Dockerfile                            (680 B) - Container build
+  ✓ .dockerignore                         (279 B) - Docker exclusions
+  ✓ Build: npm install && npm run build
+  ✓ Start: npm start (port 3000)
+
+Vercel Backup:
+  ✓ vercel.json                           (584 B) - One-click Vercel deploy
+
+Documentation:
+  ✓ DEPLOYMENT_GUIDE.md                   (6.7 KB) - Step-by-step guide
+  ✓ DEPLOYMENT_CHECKLIST.md               (9.0 KB) - Phased action plan
+  ✓ DAY5_SUMMARY.md                       (Quick reference)
+
+COMMITS CREATED:
+─────────────────────────────────────────────────────────────────────────────
+
+[9414839] Add Day 5 summary - deployment infrastructure complete
+[5b23f55] Add Day 5 deployment checklist and action plan
+[8757d65] Day 5: Add GitHub Actions CI/CD + Railway deployment configuration
+
+Total: 3 commits ready to push to GitHub
+
+QUICK START (When GitHub repo exists):
+─────────────────────────────────────────────────────────────────────────────
+
+1. Create GitHub Repository:
+   https://github.com/new → Name: LaafStyl-Marketplace
+
+2. Push from local:
+   git remote add origin https://github.com/BrydonRodgers/LaafStyl-Marketplace.git
+   git branch -M main
+   git push -u origin main
+
+3. Add GitHub Secrets (Settings → Secrets):
+   SUPABASE_URL              (from Supabase dashboard)
+   SUPABASE_ANON_KEY         (from Supabase → Settings → API)
+   STRIPE_PUBLISHABLE_KEY    (from Stripe → API Keys)
+   STRIPE_SECRET_KEY         (from Stripe → API Keys)
+   RAILWAY_TOKEN             (from Railway → Account → API Tokens)
+
+4. Setup Railway:
+   https://railway.app → New Project → Connect GitHub
+   Select: BrydonRodgers/LaafStyl-Marketplace
+   Add environment variables (see DEPLOYMENT_GUIDE.md)
+   Deploy
+
+5. Configure Webhooks:
+   Stripe: Add endpoint URL to Stripe Dashboard
+   Payfast: Update ITN URL in Payfast settings
+
+6. Test:
+   Access: https://[railway-app].up.railway.app
+   Test Stripe payment (card: 4242 4242 4242 4242)
+   Test Payfast payment (sandbox)
+   Verify orders appear in Supabase
+
+ENVIRONMENT VARIABLES NEEDED:
+─────────────────────────────────────────────────────────────────────────────
+
+GitHub Secrets (for Actions):
+  SUPABASE_URL
+  SUPABASE_ANON_KEY
+  STRIPE_PUBLISHABLE_KEY
+  STRIPE_SECRET_KEY (optional, used by backend)
+  RAILWAY_TOKEN
+
+Railway Environment (Frontend):
+  NEXT_PUBLIC_SUPABASE_URL
+  NEXT_PUBLIC_SUPABASE_ANON_KEY
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+  NEXT_PUBLIC_API_URL (Railway auto-generates)
+  NODE_ENV=production
+
+Railway Environment (Backend/Webhooks):
+  STRIPE_SECRET_KEY
+  STRIPE_WEBHOOK_SECRET
+  PAYFAST_MERCHANT_ID=33811799
+  PAYFAST_MERCHANT_KEY
+  SUPABASE_SERVICE_ROLE_KEY
+
+DEPLOYMENT ARCHITECTURE:
+─────────────────────────────────────────────────────────────────────────────
+
+GitHub Repository (main branch)
+    ↓
+GitHub Actions (CI/CD Pipeline)
+    ├─ Node.js 18 setup
+    ├─ npm install
+    ├─ npm run lint
+    ├─ npm run build
+    └─ Deploy trigger
+        ↓
+    Railway.app (Production)
+    ├─ Auto-detect Next.js
+    ├─ Build from Dockerfile
+    ├─ Start: npm start
+    └─ Port: 3000
+        ↓
+    https://[app-name].up.railway.app
+        ↓
+    Browser Access
+    ├─ Frontend UI
+    ├─ Product listing
+    ├─ Shopping cart
+    ├─ Checkout
+    └─ Payment processing
+
+Webhooks:
+    Stripe Events → /api/webhooks/stripe
+    Payfast Events → /api/webhooks/payfast
+        ↓
+    Update Supabase Database
+
+TESTING CHECKLIST:
+─────────────────────────────────────────────────────────────────────────────
+
+After Railway deployment:
+  [ ] GitHub Actions workflow passes
+  [ ] Application loads at Railway URL
+  [ ] Homepage renders correctly
+  [ ] Products load from database
+  [ ] Login/signup works
+  [ ] Add to cart functionality
+  [ ] Stripe checkout (sandbox)
+  [ ] Payfast checkout (sandbox)
+  [ ] Stripe webhook fires
+  [ ] Payfast webhook fires
+  [ ] Order status updates
+  [ ] No errors in logs
+  [ ] Mobile responsive
+  [ ] No CORS errors
+
+SUCCESS CRITERIA:
+─────────────────────────────────────────────────────────────────────────────
+
+Day 5 is complete when:
+  ✓ GitHub repository created
+  ✓ Main branch pushed to GitHub
+  ✓ GitHub Actions workflow runs successfully
+  ✓ Railway deployment completes
+  ✓ Application accessible at Railway URL
+  ✓ Payment processing works (both methods)
+  ✓ Webhooks fire and update Supabase
+  ✓ No errors in production logs
+
+DOCUMENTATION:
+─────────────────────────────────────────────────────────────────────────────
+
+Start here:
+  → DAY5_SUMMARY.md         (Quick overview - ~5 min read)
+  → DEPLOYMENT_CHECKLIST.md (Step-by-step plan - ~10 min read)
+  → DEPLOYMENT_GUIDE.md     (Full reference - ~15 min read)
+
+For specific tasks:
+  → GitHub setup → See DEPLOYMENT_GUIDE.md Phase 1
+  → Secrets config → See DEPLOYMENT_GUIDE.md Phase 2
+  → Railway setup → See DEPLOYMENT_GUIDE.md Phase 3
+  → Webhooks → See DEPLOYMENT_GUIDE.md Phase 4
+  → Testing → See DEPLOYMENT_GUIDE.md Phase 5
+
+CURRENT STATUS:
+─────────────────────────────────────────────────────────────────────────────
+
+Working Directory: /home/brydon-rodgers/.openclaw/workspace/shop-laafstyl
+Current Branch: main
+Remote: Not set (ready for GitHub push)
+Commits: 3 ready to push
+Uncommitted Changes: None
+
+Application:
+  ✓ Frontend: Next.js React app
+  ✓ Backend: API routes complete
+  ✓ Database: Supabase schema ready
+  ✓ Auth: Supabase JWT configured
+  ✓ Payments: Stripe + Payfast integrated
+  ✓ Webhooks: Both webhook handlers ready
+
+Deployment:
+  ✓ GitHub Actions pipeline
+  ✓ Railway configuration
+  ✓ Docker containerization
+  ✓ Environment variables documented
+  ✓ Deployment guides complete
+
+NEXT STEPS:
+─────────────────────────────────────────────────────────────────────────────
+
+1. Create GitHub repository at https://github.com/new
+2. Add remote: git remote add origin ...
+3. Push to GitHub: git push -u origin main
+4. Add secrets to GitHub Settings
+5. Create Railway account at https://railway.app
+6. Connect GitHub repository to Railway
+7. Add environment variables to Railway
+8. Deploy and test
+
+Estimated time to deployment: ~1 hour
+
+ESTIMATED TIMELINE:
+─────────────────────────────────────────────────────────────────────────────
+
+Phase 1: GitHub Repo Creation      ⏳ 5 minutes
+Phase 2: GitHub Secrets            ⏳ 10 minutes
+Phase 3: Railway Setup             ⏳ 15 minutes (includes build time)
+Phase 4: Webhook Configuration     ⏳ 10 minutes
+Phase 5: Live Testing              ⏳ 20 minutes
+──────────────────────────────────────────────
+Total Estimated Time               ~60 minutes
+
+PRODUCTION DEPLOYMENT (Day 7):
+─────────────────────────────────────────────────────────────────────────────
+
+When ready for live (non-sandbox):
+  1. Generate live Stripe keys
+  2. Switch to Payfast live merchant account
+  3. Update Railway environment variables
+  4. Update webhook URLs in Stripe/Payfast
+  5. Switch database to production Supabase
+  6. Full regression testing
+  7. Custom domain setup (optional)
+  8. Monitor error logs and metrics
+
+See: DEPLOYMENT_GUIDE.md "Production Deployment" section
+
+─────────────────────────────────────────────────────────────────────────────
+
+ALL FILES COMMITTED AND READY FOR GITHUB DEPLOYMENT ✓
+
+For questions, see documentation files listed above.
