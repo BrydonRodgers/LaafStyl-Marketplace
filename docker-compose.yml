@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: laafstyl_marketplace_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: laafstyl-dev-password
+      POSTGRES_DB: laafstyl_marketplace
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - laafstyl-network
+
+  # Node.js App (Next.js)
+  app:
+    build: .
+    container_name: laafstyl_marketplace_app
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:laafstyl-dev-password@postgres:5432/laafstyl_marketplace
+      STRIPE_PUBLIC_KEY: pk_test_51234567890abcdefghij
+      STRIPE_SECRET_KEY: sk_test_51234567890abcdefghij
+      STRIPE_WEBHOOK_SECRET: whsec_test_XXXX
+      PAYFAST_MERCHANT_ID: 33811799
+      PAYFAST_MERCHANT_KEY: 8mw1g8XXXX
+      PAYFAST_PASSPHRASE: Ihave1newborn
+      PAYFAST_RETURN_URL: http://localhost:3000/success
+      PAYFAST_CANCEL_URL: http://localhost:3000/error
+      PAYFAST_NOTIFY_URL: http://localhost:3000/api/webhooks/payfast
+      RESEND_API_KEY: re_test_XXXX
+      NEXT_PUBLIC_URL: http://localhost:3000
+      NODE_ENV: development
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - laafstyl-network
+    command: npm run dev
+
+volumes:
+  postgres_data:
+
+networks:
+  laafstyl-network:
+    driver: bridge
