@@ -12,8 +12,7 @@ export default function ProductsPage() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-        const res = await fetch(`${apiUrl}/api/products`);
+        const res = await fetch('/api/products');
         const { data } = await res.json();
         setProducts(data || []);
       } catch (error) {
@@ -30,7 +29,7 @@ export default function ProductsPage() {
     ? products
     : products.filter(p => p.category === category);
 
-  const categories = ['all', ...new Set(products.map(p => p.category).filter(Boolean))] as string[];
+  const categories = ['all', ...new Set(products.map(p => p.category).filter(Boolean) as string[])];
 
   return (
     <div className="min-h-screen bg-white">
