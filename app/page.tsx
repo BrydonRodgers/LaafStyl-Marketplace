@@ -14,16 +14,6 @@ export default function Home() {
 
   useEffect(() => {
     async function init() {
-      try {
-        // Check if user is logged in
-        const currentUser = await getCurrentUser();
-        if (currentUser) {
-          setUser(currentUser);
-        }
-      } catch (error) {
-        console.error('Auth error:', error);
-      }
-
       // Fetch products
       try {
         const res = await fetch('/api/products');
@@ -33,6 +23,17 @@ export default function Home() {
         console.error('Failed to fetch products:', error);
         setProducts([]);
       }
+
+      // Check if user is logged in (non-blocking)
+      try {
+        const currentUser = await getCurrentUser();
+        if (currentUser) {
+          setUser(currentUser);
+        }
+      } catch (error) {
+        console.error('Auth error:', error);
+      }
+
       setLoading(false);
     }
 
