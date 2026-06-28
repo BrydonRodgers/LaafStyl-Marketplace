@@ -9,7 +9,7 @@ const MOCK_SERVICES = [
     description: 'Expert beard shaping and styling. Perfect for maintaining that sharp look.',
     price: 29.99,
     duration_minutes: 30,
-    image_url: 'https://images.unsplash.com/photo-1585747860715-cd4628902d4a?w=500&h=500&fit=crop',
+    image_url: 'https://images.pexels.com/photos/5584461/pexels-photo-5584461.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
     active: true,
   },
   {
@@ -18,7 +18,7 @@ const MOCK_SERVICES = [
     description: 'Complete grooming package: haircut, beard trim, facial, and styling.',
     price: 79.99,
     duration_minutes: 90,
-    image_url: 'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500&h=500&fit=crop',
+    image_url: 'https://images.pexels.com/photos/27165073/pexels-photo-27165073.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
     active: true,
   },
   {
@@ -27,7 +27,7 @@ const MOCK_SERVICES = [
     description: 'Relaxing scalp massage with premium hair treatment oils.',
     price: 49.99,
     duration_minutes: 45,
-    image_url: 'https://images.unsplash.com/photo-1552526881-721267d213f9?w=500&h=500&fit=crop',
+    image_url: 'https://images.pexels.com/photos/8460603/pexels-photo-8460603.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
     active: true,
   },
   {
@@ -36,7 +36,7 @@ const MOCK_SERVICES = [
     description: 'Gourmet catering service with variety of platters and beverages.',
     price: 199.99,
     duration_minutes: 120,
-    image_url: 'https://images.unsplash.com/photo-1555939594-58d7cb561021?w=500&h=500&fit=crop',
+    image_url: 'https://images.pexels.com/photos/11893745/pexels-photo-11893745.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop',
     active: true,
   },
 ];

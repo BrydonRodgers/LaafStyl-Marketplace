@@ -84,15 +84,21 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20 px-4">
+      <section
+        className="relative bg-cover bg-center text-white py-28 px-4"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(15,23,42,0.7), rgba(15,23,42,0.75)), url('https://images.pexels.com/photos/27165073/pexels-photo-27165073.jpeg?auto=compress&cs=tinysrgb&w=1600')",
+        }}
+      >
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-4">Welcome to LaafStyl</h1>
-          <p className="text-xl text-blue-100 mb-8">
+          <h1 className="text-5xl font-bold mb-4 drop-shadow">Welcome to LaafStyl</h1>
+          <p className="text-xl text-gray-200 mb-8 drop-shadow">
             Premium grooming products and services for the modern man
           </p>
           <Link
             href="/products"
-            className="bg-white text-blue-600 px-8 py-3 rounded font-semibold hover:bg-gray-100"
+            className="bg-white text-gray-900 px-8 py-3 rounded font-semibold hover:bg-gray-100 shadow-lg"
           >
             Shop Now
           </Link>
